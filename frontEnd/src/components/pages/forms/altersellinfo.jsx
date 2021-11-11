@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router";
 import { ReactComponent as Logo } from "../../../img/logoSVG.svg";
 import api from "../../API/api";
 
@@ -42,31 +43,34 @@ export default class altersellinfo extends Component {
             redirect,
         } = this.state;
 
-        console.log(sellerToBeUpdated);
+        console.log(loaded ? sellerToBeUpdated.data[0].endereco_vendedor : []);
+
+        console.log(enderecoVendedor);
+        console.log(nomeVendedor);
+        console.log(celVendedor);
+        console.log(emailVendedor);
+        console.log(senhaVendedor);
+        console.log(dataNascVendedor);
+        console.log(rgVendedor);
+        console.log(cpfVendedor);
+        console.log(fotoVendedor);
+
+        
 
         function doUpdate() {
-            console.log(enderecoVendedor);
-            console.log(nomeVendedor);
-            console.log(celVendedor);
-            console.log(emailVendedor);
-            console.log(senhaVendedor);
-            console.log(dataNascVendedor);
-            console.log(rgVendedor);
-            console.log(cpfVendedor);
-            console.log(fotoVendedor);
-
-            api.post(`/UpdateVendedor/${vendedorId}`, {
-                endereco_vendedor: enderecoVendedor,
-                nome_vendedor: nomeVendedor,
-                cel_vendedor: celVendedor,
-                email_vendedor: emailVendedor,
-                senha_vendedor: senhaVendedor,
-                datanasc_cliente: dataNascVendedor,
-                rg_vendedor: rgVendedor,
-                cpf_vendedor: cpfVendedor,
-                fotoVendedor: fotoVendedor,
+            api.post(`/UpdateVendedor/${sellerToBeUpdated.data[0].vendedor_id}`, {
+                endereco_vendedor: enderecoVendedor === '' ? sellerToBeUpdated.data[0].endereco_vendedor : enderecoVendedor ,
+                nome_vendedor: nomeVendedor === '' ? sellerToBeUpdated.data[0].nome_vendedor : nomeVendedor,
+                cel_vendedor: celVendedor === ''? sellerToBeUpdated.data[0].cel_vendedor : celVendedor,
+                email_vendedor: emailVendedor === ''? sellerToBeUpdated.data[0].email_vendedor : emailVendedor,
+                senha_vendedor: senhaVendedor === ''? sellerToBeUpdated.data[0].senha_vendedor : senhaVendedor,
+                datanasc_cliente: dataNascVendedor === ''? sellerToBeUpdated.data[0].datanasc_vendedor : dataNascVendedor,
+                rg_vendedor: rgVendedor === ''? sellerToBeUpdated.data[0].rg_vendedor : rgVendedor,
+                cpf_vendedor: cpfVendedor === ''? sellerToBeUpdated.data[0].cpf_vendedor : cpfVendedor,
+                fotoVendedor: fotoVendedor === ''? sellerToBeUpdated.data[0].fotoVendedor : fotoVendedor,
             }).then(resp => {
                 console.log(resp);
+                alert('Dados alterados, volte a página anterior')
             });
         }
         return (
@@ -98,8 +102,8 @@ export default class altersellinfo extends Component {
                                     e.target.value != sellerToBeUpdated.data[0].nome_vendedor
                                         ? this.setState({ nomeVendedor: e.target.value })
                                         : this.setState({
-                                            nomeVendedor: sellerToBeUpdated.data[0].nome_vendedor,
-                                        })
+                                              nomeVendedor: sellerToBeUpdated.data[0].nome_vendedor,
+                                          })
                                 }
                             />
 
@@ -215,13 +219,13 @@ export default class altersellinfo extends Component {
                                 type="text"
                                 className="w-4/6 mx-auto border-b-2 border-eireBlack outline-none"
                                 defaultValue={
-                                    this.state.loaded ? sellerToBeUpdated.data[0].fotoVendedor : ""
+                                    loaded ? sellerToBeUpdated.data[0].fotoVendedor : ""
                                 }
                                 onChange={e =>
                                     e.target.value != sellerToBeUpdated.data[0].fotoVendedor
-                                        ? this.setState({ nomeProd: e.target.value })
+                                        ? this.setState({ fotoVendedor: e.target.value })
                                         : this.setState({
-                                              nomeProd: sellerToBeUpdated.data[0].fotoVendedor,
+                                            fotoVendedor: sellerToBeUpdated.data[0].fotoVendedor,
                                           })
                                 }
                             />
@@ -229,10 +233,10 @@ export default class altersellinfo extends Component {
                     </div>
 
                     <button
-                        className="py-1 px-2 mt-4 mx-auto border-2 border-eireBlack mt-2"
+                        className="py-1 px-2 mt-4 mx-auto border-2 bg-dCultured border-eireBlack mt-2"
                         onClick={doUpdate}
                     >
-                        <p>Alterar</p>
+                        <input type="submit" className='bg-dCultured'/>
                     </button>
                 </div>
             </div>

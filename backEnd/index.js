@@ -229,23 +229,14 @@ app.get("/updateCliente/:cliente_id", function (req, res) {
         "select * from cliente where cliente_id=?",
         [req.params.cliente_id],
         function (err, results, fields) {
-            res.render("updateCliente", {
-                cliente_id: req.params.cliente_id,
-                endereco_cliente: results[0].endereco_cliente,
-                nome_cliente: results[0].nome_cliente,
-                cel_cliente: results[0].cel_cliente,
-                email_cliente: results[0].email_cliente,
-                senha_cliente: results[0].senha_cliente,
-                datanasc_cliente: results[0].datanasc_cliente,
-                rg_cliente: results[0].rg_cliente,
-                cpf_cliente: results[0].cpf_cliente,
-            });
+            console.log(results.data[0].nome_vendedor);
+            res.send(results);
         }
     );
 });
 
 //Atualizar dados do vendedor
-app.post("/UpdateVendedor/:cliente_id", function (req, res) {
+app.post("/UpdateVendedor/:vendedor_id", function (req, res) {
     const enderecoVendedor = req.body.endereco_vendedor;
     const nomeVendedor = req.body.nome_vendedor;
     const celVendedor = req.body.cel_vendedor; 
@@ -258,7 +249,8 @@ app.post("/UpdateVendedor/:cliente_id", function (req, res) {
     const idVendedor = req.params.vendedor_id;
 
     conn.query(
-        `UPDATE vendedor SET endereco_vendedor='${enderecoVendedor}',nome_vendedor='${nomeVendedor}', cel_vendedor='${celVendedor}', email_vendedor='${emailVendedor}', senha_vendedor='${senhavendedor}', datanasc_vendedor='${datanascVendedor}', rg_vendedor='${rgVendedor}', cpf_vendedor='${cpfVendedor}', fotoVendedor = '${fotoVendedor}' WHERE vendedor_id=${idVendedor}`, (err, result) => {
+        `UPDATE vendedor SET endereco_vendedor='${enderecoVendedor}',nome_vendedor='${nomeVendedor}', cel_vendedor='${celVendedor}', email_vendedor='${emailVendedor}', senha_vendedor='${senhavendedor}', datanasc_cliente
+        ='${datanascVendedor}', rg_vendedor='${rgVendedor}', cpf_vendedor='${cpfVendedor}', fotoVendedor = '${fotoVendedor}' WHERE vendedor_id=${idVendedor}`, (err, result) => {
             if(!err){
                 res.send(result);
             }else{
@@ -284,6 +276,28 @@ app.get("/updateVendedor/:vendedor_id", function (req, res) {
     );
 });
 
+app.post("/inserirProduto", (req, res) => {
+
+    const produto = req.body.nome_produto;
+    const preco = req.body.preco_produto;
+    const categoria_id = req.body.categoria_id;
+    const vendedor_id = req.body.vendedor_id;
+    const qtd_estoque = req.body.qtd_estoque;
+    const descricao = req.body.descricao;
+    const tamanho = req.body.tamanho;
+    const marca = req.body.marca;
+    const imagem = req.body.img;
+
+    const sql = `INSERT INTO produto (nome_produto, preco_produto, categoria_id, vendedor_id, qtd_estoque, descricao, tamanho, imagem, marca ) values ("${produto}",${preco},${categoria_id},${vendedor_id},${qtd_estoque}, '${descricao}', '${tamanho}', '${imagem}', '${marca}')`;
+    conn.query(sql, (err, result) => {
+        if (err) {
+            res.send(err)
+        };
+
+        res.send({ msg: "poduto cadastrado com sucesso!", resp: result });
+    });
+
+});
 //get routes
 router.get("/shoes", routes.shoes);
 router.get("/top", routes.top);

@@ -134,7 +134,9 @@ export default class SellerPage extends React.Component {
 
                                             <div className="grid grid-cols-2 ">
                                                 <button className="border-4 border-eireBlack m-4 rounded-xl transition duration-200 ease-out hover:border-cat1">
-                                                    Inserir produtos
+                                                    <Link to={`/insertProduct/${id}`}>
+                                                        Inserir produto
+                                                    </Link>
                                                 </button>
                                             </div>
                                         </div>

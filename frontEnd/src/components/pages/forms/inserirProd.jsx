@@ -1,8 +1,70 @@
 import React, { Component } from "react";
 import { ReactComponent as Logo } from "../../../img/logoSVG.svg";
+import api from "../../API/api";
 
 export default class inserirProd extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            nomeProd: "",
+            precoProd: 0,
+            categoria: 0,
+            vendedor: 0,
+            qtd: 0,
+            descricao: "",
+            tamanho: "",
+            marca: "",
+            image: "",
+        };
+        
+    this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({categoria: event.target.value});
+    }
+
+
+
     render() {
+        const { nomeProd, precoProd,categoria, qtd, descricao, tamanho, marca, image } =
+            this.state;
+
+        const id = this.props.match.params.vendedor_id;
+        
+        function changeCat() {
+            
+        }
+
+        function inserirProd() {
+            let cat = 0;
+
+            if(categoria === "1"){
+                cat = 1;
+            }else if(categoria === "2"){ 
+                cat = 2;
+            }else if(categoria === "3"){
+                cat = 3;
+            }else if(categoria === "4"){
+                cat = 4;
+            }
+
+            api.post(`/inserirProduto`, {
+                nome_produto: nomeProd,
+                preco_produto: precoProd,
+                categoria_id: categoria,
+                vendedor_id: id,
+                qtd_estoque: qtd,
+                descricao: descricao,
+                tamanho: tamanho,
+                marca: marca,
+                img: image,
+            }).then(resp => {
+                console.log(resp);
+                alert("Dados alterados, volte a página anterior");
+            });
+        }
+
         return (
             <>
                 <header className="w-full h-auto py-2 flex align-center shadow-xl mb-10">
@@ -14,12 +76,13 @@ export default class inserirProd extends Component {
                         Inserir produto
                     </h1>
 
-                    <form className="w-9/12 mx-auto h-auto divide-eireBlack sm:w-full">
-                        <div className='w-4/12 mx-auto'>
+                    <div className="w-9/12 mx-auto h-auto divide-eireBlack sm:w-full">
+                        <div className="w-4/12 mx-auto">
                             <label className="text-lg mr-2">Digite o nome do produto</label>
                             <input
                                 type="text"
                                 className="border-b-2 border-eireBlack outline-none w-full"
+                                onChange={e => this.setState({ nomeProd: e.target.value })}
                             />
                         </div>
 
@@ -33,6 +96,7 @@ export default class inserirProd extends Component {
                                             name="marca"
                                             id="marca"
                                             className="border-b-2 border-eireBlack outline-none"
+                                            onChange={e => this.setState({ marca: e.target.value })}
                                         />
                                     </div>
                                     <div className="m-2">
@@ -40,6 +104,7 @@ export default class inserirProd extends Component {
                                         <input
                                             type="number"
                                             className="border-b-2 border-eireBlack outline-none"
+                                            onChange={e => this.setState({ qtd: e.target.value })}
                                         />
                                     </div>
                                 </div>
@@ -52,6 +117,9 @@ export default class inserirProd extends Component {
                                             name="preco"
                                             id="preco"
                                             className="border-b-2 border-eireBlack outline-none w-full"
+                                            onChange={e =>
+                                                this.setState({ precoProd: e.target.value })
+                                            }
                                         />
                                     </div>
                                     <div className="m-2">
@@ -66,6 +134,7 @@ export default class inserirProd extends Component {
                                             type="text"
                                             maxLength="300"
                                             className="border-b-2 border-eireBlack outline-none w-full"
+                                            onChange={e => this.setState({ image: e.target.value })}
                                         />
                                     </div>
                                 </div>
@@ -73,39 +142,43 @@ export default class inserirProd extends Component {
 
                             <div className="flex flex-col text-center">
                                 <label className="text-xl">selecione a categoria do produto</label>
-                                <div className="flex flex-row my-2 mx-auto">
-                                    <div className="w-28 h-14 border-2 border-eireBlack m-2 text-center">
-                                        <p className="text-lg">Tênis</p>
-                                        <input type="radio" name="cat" id="cat" value="1" />
-                                    </div>
-                                    <div className="w-28 h-14 border-2 border-eireBlack m-2 text-center">
-                                        <p className="text-lg">Camisetas</p>
-                                        <input type="radio" name="cat" id="cat" value="2" />
-                                    </div>
-                                </div>
+                                
+                                <select value={this.state.categoria} onChange={this.handleChange
+                                }>
+                                    <option value='0'></option>
+                                    <option value='1'>Tenis</option>
+                                    <option value='2'>Camiseta</option>
+                                    <option value='3'>Jaquetas e moletons</option>
+                                    <option value='4'>bottomwear</option>
+                                </select>
 
-                                <div className="flex flex-row my-2 mx-auto">
-                                    <div className="w-28 h-14 border-2 border-eireBlack m-2 text-center">
-                                        <p className="text-lg">Bottomwear</p>
-                                        <input type="radio" name="cat" id="cat" value="4" />
-                                    </div>
-                                    <div className="w-28 h-14 border-2 border-eireBlack m-2 text-center">
-                                        <p className="text-lg">Moletons</p>
-                                        <input type="radio" name="cat" id="cat" value="3" />
-                                    </div>
-                                </div>
                             </div>
+                            
                         </container>
 
-                        <div className='flex flex-col w-96 mx-auto'>
+                        <div className="flex flex-col w-96 mx-auto">
                             <p>Descrição</p>
-                            <input type="text" maxLength='150' className="border-b-2 border-eireBlack outline-none"/>
+                            <input
+                                type="text"
+                                maxLength="150"
+                                className="border-b-2 border-eireBlack outline-none"
+                                onChange={e => this.setState({ descricao: e.target.value })}
+                            />
+                        </div>
+                        <div className="flex flex-col w-96 mx-auto">
+                            <p>Tamanho</p>
+                            <input
+                                type="text"
+                                maxLength="3"
+                                className="border-b-2 border-eireBlack outline-none"
+                                onChange={e => this.setState({ tamanho: e.target.value })}
+                            />
                         </div>
 
-                        <div className='w-max mx-auto my-4'>
-                            <input type="submit" className="py-1 px-2 mt-4 mx-auto" />
-                        </div>
-                    </form>
+                        <button onClick={inserirProd}>
+                            <input type="submit" className="py-1 px-2 mt-4 mx-auto"/>
+                        </button>
+                    </div>
                 </main>
             </>
         );

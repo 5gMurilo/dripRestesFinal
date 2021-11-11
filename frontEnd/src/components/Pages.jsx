@@ -105,6 +105,7 @@ const Pages = _ => {
                         />
 
                         <rRouters.Route path="/alterAddress/:cliente_id" component={alterAddress} />
+                        
                     </AuthProvider>
                 </CartContext>
             </rRouters.Switch>

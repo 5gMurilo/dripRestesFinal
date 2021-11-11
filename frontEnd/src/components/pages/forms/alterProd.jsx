@@ -49,7 +49,9 @@ export default class alterProd extends Component {
                 marca: marcaProd,
                 produto_id: id,
             }).then(resp => {
+                this.setState({redirect: true});
                 console.log(resp);
+                return <Redirect to={`/sellerPage/${id}`} />
             });
         }
         return (
