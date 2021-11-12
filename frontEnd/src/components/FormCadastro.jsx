@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logoSVG from "../img/logoSVG.svg";
 import * as RiIcons from "react-icons/ri";
-import api from "./API/api"; 
+import api from "./API/api";
 
 function FormCadastro() {
     //logical states
@@ -18,13 +18,11 @@ function FormCadastro() {
     const [cpf, setcpf] = useState("");
 
     const [passwordShow, setpasswordShow] = useState(false);
-    
 
     const register = () => {
-
         console.log(`${email},${nome}, ${password}`);
 
-        if(password === passwordConf){
+        if (password === passwordConf) {
             api.post("/api/register", {
                 email: email,
                 senha: password,
@@ -34,13 +32,14 @@ function FormCadastro() {
                 perfil: tipoConta,
                 foto: photo,
                 cpf: cpf,
-                rg: rg, 
+                rg: rg,
                 cel: celular,
-            }).then((response) => {
+                tipoCadastro: tipoConta,
+            }).then(response => {
                 console.log(response);
             });
-        }else{ 
-            alert('As senhas informadas não são iguais, reveja a senha e tente novamente');
+        } else {
+            alert("As senhas informadas não são iguais, reveja a senha e tente novamente");
         }
     };
 
@@ -66,10 +65,7 @@ function FormCadastro() {
           xl:w-2/4
           "
                 >
-                    <label
-                        htmlFor="user"
-                        className="font-semibold text-xl tracking-wider py-2"
-                    >
+                    <label htmlFor="user" className="font-semibold text-xl tracking-wider py-2">
                         Insira seu e-mail
                     </label>
                     <input
@@ -77,14 +73,11 @@ function FormCadastro() {
                         name="email"
                         className="outline-none border-2 rounded-xl border-eireBlack w-12/12 mx-4 leading-8 px-4 transition duration-150 ease-out
           focus:border-myrtleGreen focus:shadow-green"
-                        onChange={(e) => setEmail(e.target.value)}
-                        maxLength='150'
+                        onChange={e => setEmail(e.target.value)}
+                        maxLength="150"
                     />
 
-                    <label
-                        htmlFor="password"
-                        className="font-semibold text-xl tracking-wider py-2"
-                    >
+                    <label htmlFor="password" className="font-semibold text-xl tracking-wider py-2">
                         insira sua senha
                     </label>
                     <div className="w-12/12 flex mx-4 ">
@@ -93,7 +86,7 @@ function FormCadastro() {
                             name="password"
                             className="outline-none border-2 border-eireBlack leading-8 px-2 rounded-xl w-11/12 transition duration-150 ease-out
           focus:border-myrtleGreen focus:shadow-green"
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={e => setPassword(e.target.value)}
                         />
 
                         <i
@@ -107,10 +100,7 @@ function FormCadastro() {
                         </i>
                     </div>
 
-                    <label
-                        htmlFor="password"
-                        className="font-semibold text-xl tracking-wider py-2"
-                    >
+                    <label htmlFor="password" className="font-semibold text-xl tracking-wider py-2">
                         Confirme sua senha
                     </label>
                     <div className="w-12/12 flex mx-4 ">
@@ -119,15 +109,12 @@ function FormCadastro() {
                             name="password"
                             className="outline-none border-2 border-eireBlack leading-8 px-2 rounded-xl w-11/12 transition duration-150 ease-out
                             focus:border-myrtleGreen focus:shadow-green"
-                            onChange={(e) => setPasswordConf(e.target.value)}
+                            onChange={e => setPasswordConf(e.target.value)}
                             required="required"
                         />
                     </div>
-                    
-                    <label
-                        htmlFor="nome"
-                        className="font-semibold text-xl tracking-wider py-2"
-                    >
+
+                    <label htmlFor="nome" className="font-semibold text-xl tracking-wider py-2">
                         Insira seu nome completo
                     </label>
                     <input
@@ -136,13 +123,10 @@ function FormCadastro() {
                         className="outline-none border-2 rounded-xl border-eireBlack w-12/12 mx-4 leading-8 px-4 transition duration-150 ease-out
                         focus:border-myrtleGreen focus:shadow-green"
                         required="required"
-                        onChange={(e) => setNome(e.target.value)}
+                        onChange={e => setNome(e.target.value)}
                     />
 
-                    <label
-                        htmlFor="dataNasc"
-                        className="font-semibold text-xl tracking-wider py-2"
-                    >
+                    <label htmlFor="dataNasc" className="font-semibold text-xl tracking-wider py-2">
                         Data de nascimento
                     </label>
                     <input
@@ -152,13 +136,11 @@ function FormCadastro() {
           focus:border-myrtleGreen focus:shadow-green"
                         placeholder="ex.: 16/06/2002"
                         required="required"
-                        maxLength='16'
-                        onChange={(e) => setDatanasc(e.target.value)}
+                        maxLength="16"
+                        onChange={e => setDatanasc(e.target.value)}
                     />
 
-                    <label className="font-semibold text-xl tracking-wider py-2">
-                        Celular
-                    </label>
+                    <label className="font-semibold text-xl tracking-wider py-2">Celular</label>
                     <input
                         type="text"
                         name="dataNasc"
@@ -166,12 +148,12 @@ function FormCadastro() {
           focus:border-myrtleGreen focus:shadow-green"
                         placeholder="ex.: 16/06/2002"
                         required="required"
-                        onChange={(e) => setCelular(e.target.value)}
+                        onChange={e => setCelular(e.target.value)}
                         maxLength="16"
                     />
 
                     <div className="grid grid-cols-2">
-                        <div className='flex flex-col'>
+                        <div className="flex flex-col">
                             <label className="font-semibold text-xl tracking-wider py-2">
                                 Número do RG
                             </label>
@@ -182,12 +164,12 @@ function FormCadastro() {
           focus:border-myrtleGreen focus:shadow-green"
                                 placeholder="ex.: 16/06/2002"
                                 required="required"
-                                onChange={(e) => setrg(e.target.value)}
+                                onChange={e => setrg(e.target.value)}
                                 maxLength="14"
                             />
                         </div>
 
-                        <div className='flex flex-col'>
+                        <div className="flex flex-col">
                             <label className="font-semibold text-xl tracking-wider py-2">
                                 Número do CPF
                             </label>
@@ -198,16 +180,13 @@ function FormCadastro() {
           focus:border-myrtleGreen focus:shadow-green"
                                 placeholder="ex.: 16/06/2002"
                                 required="required"
-                                onChange={(e) => setcpf(e.target.value)}
+                                onChange={e => setcpf(e.target.value)}
                                 maxLength="16"
                             />
                         </div>
                     </div>
 
-                    <label
-                        htmlFor="dataNasc"
-                        className="font-semibold text-xl tracking-wider py-2"
-                    >
+                    <label htmlFor="dataNasc" className="font-semibold text-xl tracking-wider py-2">
                         Insira seu endereço
                     </label>
                     <input
@@ -217,8 +196,8 @@ function FormCadastro() {
                         focus:border-myrtleGreen focus:shadow-green"
                         placeholder="ex.: Rua de exemplo n°11 - Jd. dos Exemplos - São Paulo/SP"
                         required="required"
-                        onChange={(e) => setEndereco(e.target.value)}
-                        maxLength='150'
+                        onChange={e => setEndereco(e.target.value)}
+                        maxLength="150"
                     />
 
                     <label className="font-semibold text-xl tracking-wider py-2">
@@ -231,7 +210,7 @@ function FormCadastro() {
                         placeholder="copie o link da sua imagem postada no imgbb ou outro serviço online"
                         required="required"
                         maxLength="300"
-                        onChange={(e) => setPhoto(e.target.value)}
+                        onChange={e => setPhoto(e.target.value)}
                     />
 
                     <label className="font-semibold text-xl tracking-wider py-2">
@@ -241,7 +220,7 @@ function FormCadastro() {
                         name="tipoDeConta"
                         id="tipoDeConta"
                         className="w-11/12 mx-auto border-4 rounded-xl py-1 px-2 border-eireBlack outline-none bg-cultured active:border-myrtileGreen"
-                        onChange={(e) => {
+                        onChange={e => {
                             setTipoConta(e.target.value);
                             console.log(e.target.value);
                         }}
@@ -260,7 +239,6 @@ function FormCadastro() {
                     >
                         Efetuar cadastro
                     </button>
-
                 </div>
             </article>
 
@@ -269,11 +247,7 @@ function FormCadastro() {
       md:flex"
             >
                 <a href="/" className="m-auto">
-                    <img
-                        src={logoSVG}
-                        alt=""
-                        className="w-80 h-80 justify-center lg:w-80 h-80"
-                    />
+                    <img src={logoSVG} alt="" className="w-80 h-80 justify-center lg:w-80 h-80" />
                 </a>
             </article>
         </main>

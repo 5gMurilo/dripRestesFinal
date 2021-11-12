@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../Header";
 import * as SiIcons from "react-icons/si";
 import * as IoIcons from "react-icons/io5";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Context } from "../context/AuthContext";
 import api from "../API/api";
 export default class PagCliente extends React.Component {
@@ -25,9 +25,10 @@ export default class PagCliente extends React.Component {
         let { authenticated, handleLogout } = this.context;
 
         const { response, respFormas } = this.state;
-        console.log(response);
+        console.log(response.cliente_id);
         console.log(respFormas);
 
+        const id = this.props.match.params.cliente_id;
 
         if (authenticated) {
             return (
@@ -48,15 +49,15 @@ export default class PagCliente extends React.Component {
                                             {pessoa.nome_cliente}
                                         </p>
                                         <button className="mx-auto w-44 my-2 border-4 border-dCultured rounded-lg transition duration-200 hover:border-eireBlack">
-                                            <p>editar informações</p>
+                                            <Link to={`/alterUserInfo/${pessoa.cliente_id}`}>
+                                                <p>editar informações</p>
+                                            </Link>
                                         </button>
 
                                         <button className="mx-auto w-44 my-2 border-4 border-dCultured rounded-lg transition duration-200 hover:border-cat4">
-                                            <p>Excluir conta</p>
-                                        </button>
-
-                                        <button className="mx-auto w-44 my-2 border-4 border-dCultured rounded-lg transition duration-200 hover:border-price">
-                                            <p>Visualizar compras</p>
+                                            <Link to={`/deleteClientAccount/${pessoa.cliente_id}`}>
+                                                <p>Exluir conta</p>
+                                            </Link>
                                         </button>
                                     </div>
 
@@ -71,6 +72,12 @@ export default class PagCliente extends React.Component {
                                             <h3 className="text-xl font-bold">Celular</h3>
                                             <p>{pessoa.cel_cliente}</p>
                                         </div>
+                                        <button
+                                            className="border-4 border-quickSilver rounded-xl px-4 py-1 transition duration-200 ease-in mx-auto my-2 hover:border-red600"
+                                            onClick={handleLogout}
+                                        >
+                                            Logout
+                                        </button>
                                     </div>
                                 </div>
 
@@ -81,13 +88,10 @@ export default class PagCliente extends React.Component {
 
                                     <div className="container mx-auto flex flex-col align-center">
                                         <div className="flex flex-row align-center justify-center mx-auto divide-x-2 divide-black w-10/12 mt-4">
-                                            <div className="w-52 h-auto align-center text-center">
-                                                <p className="text-lg mb-2">
+                                            <div className="w-6/12 h-auto align-center text-center flex text-center align-center justify-center ">
+                                                <p className="text-lg mb-2 mx-2">
                                                     {pessoa.endereco_cliente}
                                                 </p>
-                                                <button className="w-8 h-8 transition duration-200 mx-4 hover:text-red600">
-                                                    <IoIcons.IoTrashOutline className="w-8 h-8" />
-                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -100,7 +104,7 @@ export default class PagCliente extends React.Component {
                                 Formas de pagamento cadastradas
                             </h1>
                             <ul className="w-8/12 mx-auto my-4 flex flex-row">
-                                {respFormas.map(formas => (
+                                {respFormas.map((formas, index) => (
                                     <>
                                         <li
                                             className="flex flex-col border-4 border-black w-60 p-2 rounded-xl mx-auto transition duration-200 hover:border-myrtleGreen"
@@ -108,7 +112,7 @@ export default class PagCliente extends React.Component {
                                         >
                                             <div className="flex flex-row content-center">
                                                 <h2 className="mx-auto my-2">
-                                                    Cartão {formas.formaPagId}
+                                                    Cartão {index+1}
                                                 </h2>
                                                 <SiIcons.SiVisa className="w-8 h-8 my-auto mx-auto" />
                                                 <button className="w-8 h-8 transition duration-200 mx-2 hover:text-maximumBlue">
@@ -133,16 +137,9 @@ export default class PagCliente extends React.Component {
                             </ul>
 
                             <button className="border-4 border-quickSilver rounded-xl px-2 py-1 transition duration-200 ease-in hover:border-price">
-                                <p>Adicionar nova forma de pagamento</p>
-                            </button>
-                        </div>
-
-                        <div className="mt-4 flex justify-center">
-                            <button
-                                className="border-4 border-quickSilver rounded-xl px-4 py-1 transition duration-200 ease-in mx-auto my-2 hover:border-red600"
-                                onClick={handleLogout}
-                            >
-                                Sair
+                                <Link to={`/newCard/${id}`}>
+                                    <p>Adicionar nova forma de pagamento</p>
+                                </Link>
                             </button>
                         </div>
                     </article>

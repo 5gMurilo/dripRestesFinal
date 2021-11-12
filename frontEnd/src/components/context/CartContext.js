@@ -1,21 +1,15 @@
-import React, {createContext, useState, useEffect} from 'react';
-import { set } from 'react-hook-form';
+import React, {createContext, useState} from 'react';
 
 const cContext = createContext();
 
-function CartContext({children}) {
+const CartContext = (props) => {
 
-    const [cart, setCart] = useState(); 
-
-    function addToCart(id) {
-        setCart(id);
-    }
-
+    const [cart, setCart] = useState([]); 
     return (
-        <cContext.Provider value={{cart}}>
-            {children}
+        <cContext.Provider value={[cart,setCart]}>
+            {props.children}
         </cContext.Provider>
     )
 }
 
-export default CartContext;
+export { cContext, CartContext };

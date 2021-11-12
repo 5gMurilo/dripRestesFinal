@@ -9,7 +9,7 @@ export default class shopAll extends Component {
     };
 
     async componentDidMount() {
-        const response = await api.get("/bottom");
+        const response = await api.get("/api/bottom");
 
         this.setState({ bottom: response.data });
     }

@@ -31,13 +31,10 @@ export default class inserirProd extends Component {
             this.state;
 
         const id = this.props.match.params.vendedor_id;
-        
-        function changeCat() {
-            
-        }
 
+        let cat = 0;
+        
         function inserirProd() {
-            let cat = 0;
 
             if(categoria === "1"){
                 cat = 1;

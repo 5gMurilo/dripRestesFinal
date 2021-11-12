@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React from "react";
 import api from "../API/api";
 import { Context } from "../context/AuthContext";
@@ -61,7 +62,9 @@ export default class SellerPage extends React.Component {
                                             </button>
 
                                             <button className="mx-auto w-44 my-2 border-4 border-dCultured rounded-lg transition duration-200 hover:border-cat4">
-                                                <p>Excluir conta</p>
+                                                <Link to={`/deleteSellerAccount/${vendedor.vendedor_id}`}>
+                                                    <p>deletar conta</p>
+                                                </Link>
                                             </button>
 
                                             <button className="mx-auto w-44 my-2 border-4 border-dCultured rounded-lg transition duration-200 hover:border-price">

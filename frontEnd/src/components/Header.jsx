@@ -5,7 +5,6 @@ import * as HiIcons from "react-icons/hi";
 import * as BiIcons from "react-icons/bi";
 import * as AiIcons from "react-icons/ai";
 import { SidebarData } from "./Menu";
-import api from './API/api.js';
 import { Link } from "react-router-dom";
 
 const Header = _ => {
@@ -40,8 +39,8 @@ const Header = _ => {
         user = storage[0];
         console.log(user);
     }else if(storage2){
-        seller = storage2[0];
-        console.log(storage2);
+        seller = storage2.session[0];
+        console.log(seller);
     }else{ 
         console.log('não tem sessão nenhuma');
     }
@@ -54,7 +53,7 @@ const Header = _ => {
                     sm:justify-center sm:mx-auto"
                 >
                     <a
-                        href="/Home"
+                        href="/"
                         className="order-2 w-auto h-36 mx-10
                         sm:order-2 sm:mr-FleftTright3 sm:ml-FleftTright3
                         lg:mr-FleftTright2 lg:order-first lg:ml-10 lg:mr-0
@@ -223,7 +222,7 @@ const Header = _ => {
                             md:w-14 md:mr-4 "
                         />
 
-                        <label>Olá </label>
+                        <label>Olá {seller.nome_vendedor}</label>
 
                         <button
                             className="mx-10 lg:mx-0 lg:ml-10"

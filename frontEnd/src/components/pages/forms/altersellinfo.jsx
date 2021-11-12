@@ -1,5 +1,5 @@
+/* eslint-disable eqeqeq */
 import React, { Component } from "react";
-import { Redirect } from "react-router";
 import { ReactComponent as Logo } from "../../../img/logoSVG.svg";
 import api from "../../API/api";
 
@@ -31,7 +31,6 @@ export default class altersellinfo extends Component {
             sellerToBeUpdated,
             loaded,
             fotoVendedor,
-            vendedorId,
             nomeVendedor,
             celVendedor,
             emailVendedor,
@@ -40,7 +39,6 @@ export default class altersellinfo extends Component {
             rgVendedor,
             cpfVendedor,
             enderecoVendedor,
-            redirect,
         } = this.state;
 
         console.log(loaded ? sellerToBeUpdated.data[0].endereco_vendedor : []);
@@ -67,7 +65,7 @@ export default class altersellinfo extends Component {
                 datanasc_cliente: dataNascVendedor === ''? sellerToBeUpdated.data[0].datanasc_vendedor : dataNascVendedor,
                 rg_vendedor: rgVendedor === ''? sellerToBeUpdated.data[0].rg_vendedor : rgVendedor,
                 cpf_vendedor: cpfVendedor === ''? sellerToBeUpdated.data[0].cpf_vendedor : cpfVendedor,
-                fotoVendedor: fotoVendedor === ''? sellerToBeUpdated.data[0].fotoVendedor : fotoVendedor,
+                fotoVendedor: fotoVendedor === ''? sellerToBeUpdated.data[0].fotoCendedor : fotoVendedor,
             }).then(resp => {
                 console.log(resp);
                 alert('Dados alterados, volte a página anterior')

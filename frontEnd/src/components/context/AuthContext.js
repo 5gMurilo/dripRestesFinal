@@ -79,7 +79,7 @@ function AuthProvider({ children }) {
 
     return (
         <Context.Provider
-            value={{ authenticated, handleLogin, handleSellersLogin, handleLogout }}
+            value={{ authenticated, handleLogin, handleSellersLogin, handleLogout, history }}
         >
             {children}
         </Context.Provider>

@@ -21,9 +21,10 @@ import inserirProd from "./pages/forms/inserirProd";
 import alterProd from "./pages/forms/alterProd";
 import newBankAcc from "./pages/forms/newBankAcc";
 import alterInfo from "./pages/forms/alterInfo";
-import alterAddress from "./pages/forms/newAddress";
-import CartContext from "./context/CartContext";
+import { CartContext } from "./context/CartContext";
 import altersellinfo from "./pages/forms/altersellinfo";
+import deleteSeller from "./pages/deleteSeller";
+import DeleteClient from "./pages/deleteClient";
 
 const Pages = _ => {
     return (
@@ -76,7 +77,7 @@ const Pages = _ => {
                             <FormLogin />
                         </rRouters.Route>
 
-                        <rRouters.Route path="/finalizacao">
+                        <rRouters.Route path="/finalizacao/:idComprador">
                             <Finalizacao />
                         </rRouters.Route>
 
@@ -104,8 +105,15 @@ const Pages = _ => {
                             component={altersellinfo}
                         />
 
-                        <rRouters.Route path="/alterAddress/:cliente_id" component={alterAddress} />
-                        
+                        <rRouters.Route
+                            path="/deleteSellerAccount/:vendedor_id"
+                            component={deleteSeller}
+                        />
+
+                        <rRouters.Route
+                            path="/deleteClientAccount/:cliente_id"
+                            component={DeleteClient}
+                        />
                     </AuthProvider>
                 </CartContext>
             </rRouters.Switch>

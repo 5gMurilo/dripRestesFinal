@@ -44,22 +44,37 @@ exports.register = (req, res) => {
     const cpf_usuario = req.body.cpf; 
     const rg_usuario = req.body.rg; 
     const celusuario = req.body.cel; 
+    const tipoConta = req.body.tipoCadastro;
 
     console.log(senhausuario);
     console.log(emailusuario);
     console.log(nomeusuario);
 
-    conn.query('INSERT INTO usuarios (nomeusuario, emailusuario, senhausuario, celusuario, fotousuario, endereco, rg_usuario, cpf_usuario, datanasc_usuario, perfType) values (?,?,?,?,?,?,?,?,?,?);', [nomeusuario,emailusuario,senhausuario,celusuario,foto,endereco,rg_usuario,cpf_usuario,datanasc_usuario,perfil], (erro, results, fields) => {
-        if(erro){
-            res.send({'code': 400, 'failed': `ocorreu um erro ${erro}`});
-        }else{
-            if(results){
-                res.send({'code': 200, 'success': 'usuário registrado com sucesso'});
+    if(tipoConta == 'c'){
+        conn.query( `INSERT INTO cliente (endereco_cliente, nome_cliente, cel_cliente, senha_cliente, datanasc_cliente, rg_cliente, cpf_cliente, fotoCliente, email_cliente) values ('${endereco}','${nomeusuario}','${celusuario}','${senhausuario}','${datanasc_usuario}','${rg_usuario}','${cpf_usuario}','${foto}','${emailusuario}');`, (erro, results, fields) => {
+            if(erro){
+                res.send({'code': 400, 'failed': `ocorreu um erro ${erro}`});
             }else{
-                res.send({'code': 400, 'fail': 'usuário registrado com sucesso'});
+                if(results){
+                    res.send({'code': 200, 'success': 'usuário registrado com sucesso'});
+                }else{
+                    res.send({'code': 400, 'fail': 'usuário registrado com sucesso'});
+                }
             }
-        }
-    })
+        })
+    }else{ 
+        conn.query('INSERT INTO vendedor (nome_vendedor, email_vendedor, senha_vendedor, cel_vendedor, fotoVendedor, endereco_vendedor, rg_vendedor, cpf_vendedor, datanasc_cliente) values (?,?,?,?,?,?,?,?,?);', [nomeusuario,emailusuario,senhausuario,celusuario,foto,endereco,rg_usuario,cpf_usuario,datanasc_usuario,perfil], (erro, results, fields) => {
+            if(erro){
+                res.send({'code': 400, 'failed': `ocorreu um erro ${erro}`});
+            }else{
+                if(results){
+                    res.send({'code': 200, 'success': 'usuário registrado com sucesso'});
+                }else{
+                    res.send({'code': 400, 'fail': 'usuário registrado com sucesso'});
+                }
+            }
+        })
+    }
 }
 
 exports.login = (req, res) => {
@@ -107,6 +122,23 @@ exports.shoes = (req, res) => {
 
 exports.bottom = (req, res) => {
     const query = 'SELECT * FROM produto WHERE categoria_id = ?';
+    const categoria = 3;
+
+    conn.query(query, [categoria], (erro,resp) =>{ 
+        if(erro){ 
+            res.json({status: `Ocorreu um erro -> ${erro}`});
+        }
+
+        if(resp.length > 0 ){ 
+            res.json(resp);
+        }else{ 
+            res.json('Não conseguimos encontrar nenhum produto nesta categoria');
+        }
+    });
+}
+
+exports.bottom = (req, res) => {
+    const query = 'SELECT * FROM produto WHERE categoria_id = ?';
     const categoria = 4;
 
     conn.query(query, [categoria], (erro,resp) =>{ 
@@ -126,17 +158,17 @@ exports.top = (req, res) => {
     const query = 'SELECT * FROM produto WHERE categoria_id = ?';
     const categoria = 2;
 
-    conn.query(query, [categoria], (erro, resp) => {
-        if(erro) {
-            res.json({status: `ocorreu um erro -> ${erro}`});
+    conn.query(query, [categoria], (erro,resp) =>{ 
+        if(erro){ 
+            res.json({status: `Ocorreu um erro -> ${erro}`});
         }
 
-        if(resp.length){
+        if(resp.length > 0 ){ 
             res.json(resp);
         }else{ 
-            res.json('não conseguimos encontrar nenhum produto nesta categoria');
+            res.json('Não conseguimos encontrar nenhum produto nesta categoria');
         }
-    })
+    });
 }
 
 exports.shopAll = (req, res) => {

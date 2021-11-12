@@ -2,6 +2,7 @@ import React from "react";
 import { ReactComponent as Logo } from "../../../img/logoSVG.svg";
 
 export default function SuccessScreen() {
+
     return (
         <div className="flex h-screen">
             <div className="flex flex-col align-center justify-center my-auto w-full">

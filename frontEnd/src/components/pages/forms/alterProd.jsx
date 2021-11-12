@@ -1,4 +1,5 @@
-import React, { Component, useEffect } from "react";
+/* eslint-disable eqeqeq */
+import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { ReactComponent as Logo } from "../../../img/logoSVG.svg";
 import api from "../../API/api";
@@ -28,7 +29,7 @@ export default class alterProd extends Component {
     }
 
     render() {
-        const { prodToBeUpdated, nomeProd, marcaProd, qtdProd, imgProd, precoProd } = this.state;
+        const { prodToBeUpdated, nomeProd, marcaProd, qtdProd, imgProd, precoProd, redirect} = this.state;
         const id = this.props.match.params.produto_id;
 
         console.log(id);
@@ -41,15 +42,14 @@ export default class alterProd extends Component {
 
         function doUpdate() {
             api.post(`/UpdateProduto/${id}`, {
-                nome_produto: nomeProd,
-                preco_produto: precoProd,
+                nome_produto: nomeProd == "" ? prodToBeUpdated.data[0].nome_produto : nomeProd,
+                preco_produto: precoProd == 0 ? prodToBeUpdated.data[0].preco_produto : precoProd,
                 categoria_id: prodToBeUpdated.data[0].categoria_id,
                 vendedor_id: prodToBeUpdated.data[0].vendedor_id,
-                qtd_estoque: qtdProd,
-                marca: marcaProd,
+                qtd_estoque: qtdProd == 0 ? prodToBeUpdated.data[0].qtd_estoque : qtdProd,
+                marca: marcaProd == "" ? prodToBeUpdated.data[0].marca : marcaProd,
                 produto_id: id,
             }).then(resp => {
-                this.setState({redirect: true});
                 console.log(resp);
                 return <Redirect to={`/sellerPage/${id}`} />
             });

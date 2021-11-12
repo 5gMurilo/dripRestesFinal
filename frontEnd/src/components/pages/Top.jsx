@@ -14,9 +14,7 @@ class Top extends Component {
   }
   render() {
     const { Top } = this.state;
-    console.log("====================================");
-    console.log(this.state);
-    console.log("====================================");
+    
     return (
       <>
         <Header />
@@ -48,6 +46,7 @@ class Top extends Component {
 
             {Top.map(top => (
                 <Cards
+                    categoria={top.categoria_id}
                     length={top.length}
                     index={top.produto_id}
                     nomeProduto={top.nome_produto}
