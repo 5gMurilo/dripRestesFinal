@@ -368,13 +368,14 @@ app.post('/sellAction', (req, res) => {
 });
 
 app.get('/someProds', (req, res) => {
-    const query = 'SELECT * FROM produtos ORDER BY produto_id DESC LIMIT 4'; 
+    const query = 'SELECT * FROM produto ORDER BY produto_id DESC LIMIT 4'; 
 
     conn.query(query, (err, resp) => {
         if(!err){
-            res.send(err);
-        }else{
             res.send(resp);
+            
+        }else{
+            res.send(err);
         }
     })
 })

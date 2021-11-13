@@ -6,6 +6,7 @@ module.exports = {
       spacing: {
         '85': '85%',
         '100': '25.75rem',
+        '110': '26rem',
         'maxC':'max-content'
       },
       colors: {
