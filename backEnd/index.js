@@ -380,6 +380,30 @@ app.get('/someProds', (req, res) => {
     })
 })
 
+app.get('/compras/:cliente_id', (req, res) => {
+    const query = `SELECT * FROM venda WHERE cliente_id = ${req.params.cliente_id}`;
+
+    conn.query(query, (err, resp) => {
+        if(!err){
+            res.send(resp);
+        }else{
+            res.send(err);
+        }
+    })
+});
+
+app.get('/vendas/:vendedor_id', (req, res) => {
+    const query = `SELECT * FROM venda WHERE vendedor_id = ${req.params.vendedor_id}`;
+
+    conn.query(query, (err, resp) => {
+        if(!err){
+            res.send(resp);
+        }else{
+            res.send(err);
+        }
+    })
+})
+
 //get routes
 router.get("/shoes", routes.shoes);
 router.get("/top", routes.top);

@@ -5,10 +5,12 @@ import * as IoIcons from "react-icons/io5";
 import { Link, Redirect } from "react-router-dom";
 import { Context } from "../context/AuthContext";
 import api from "../API/api";
+import Cards from "../cards";
 export default class PagCliente extends React.Component {
     state = {
         response: [],
         respFormas: [],
+        compras: [],
     };
 
     static contextType = Context;
@@ -16,15 +18,19 @@ export default class PagCliente extends React.Component {
     async componentDidMount() {
         const id = this.props.match.params.cliente_id;
         const request = await api.get(`/api/pageCliente/${id}`);
-        this.setState({ response: request.data });
         const reqFormas = await api.get(`/api/formasPag/${id}`);
-        this.setState({ respFormas: reqFormas.data.resp });
+        const reqCompras = await api.get(`/compras/${id}`);
+        this.setState({
+            response: request.data,
+            respFormas: reqFormas.data.resp,
+            compras: reqCompras.data,
+        });
     }
 
     render() {
         let { authenticated, handleLogout } = this.context;
 
-        const { response, respFormas } = this.state;
+        const { response, respFormas, compras } = this.state;
         console.log(response.cliente_id);
         console.log(respFormas);
 
@@ -111,9 +117,7 @@ export default class PagCliente extends React.Component {
                                             key={formas.formaPagId}
                                         >
                                             <div className="flex flex-row content-center">
-                                                <h2 className="mx-auto my-2">
-                                                    Cartão {index+1}
-                                                </h2>
+                                                <h2 className="mx-auto my-2">Cartão {index + 1}</h2>
                                                 <SiIcons.SiVisa className="w-8 h-8 my-auto mx-auto" />
                                                 <button className="w-8 h-8 transition duration-200 mx-2 hover:text-maximumBlue">
                                                     <IoIcons.IoPencilSharp className="w-6 h-6 my-auto mx-2" />

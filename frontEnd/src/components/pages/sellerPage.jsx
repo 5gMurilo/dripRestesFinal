@@ -92,15 +92,6 @@ export default class SellerPage extends React.Component {
                                                 Logout
                                             </button>
                                         </div>
-
-                                        <div className="flex flex-col ml-10">
-                                            <p className="text-2xl font-bold tracking-wide mt-10">
-                                                {responseSells.length} venda(s) realizada(s)
-                                            </p>
-                                            <button className=" w-44 h-14 my-2 border-4 border-dCultured rounded-lg transition duration-200 hover:border-cat1">
-                                                Visualizar suas vendas
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
 
